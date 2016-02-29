@@ -67,7 +67,7 @@ Vagrant.configure(2) do |config|
   # documentation for more information about their specific syntax and use.
   config.vm.provision "shell", inline: <<-SHELL
     sudo yum update -y
-    sudo yum install -y git gcc bzip2 openssl-devel libyaml-devel libffi-devel readline-devel zlib-devel gdbm-devel ncurses-devel
+    sudo yum install -y git gcc bzip2 openssl-devel libyaml-devel libffi-devel readline-devel zlib-devel gdbm-devel ncurses-devel wget
     sudo yum groupinstall -y 'Development Tools'
 
     git clone git://github.com/sstephenson/rbenv.git /usr/local/rbenv
@@ -79,11 +79,8 @@ Vagrant.configure(2) do |config|
     chmod +x /etc/profile.d/rbenv.sh
     source /etc/profile.d/rbenv.sh
 
-    pushd /tmp
-      git clone git://github.com/sstephenson/ruby-build.git
-      cd ruby-build
-      ./install.sh
-    popd
+    git clone https://github.com/rbenv/ruby-build.git /usr/local/rbenv/plugins/ruby-build
+
     rbenv install 2.3.0
     rbenv global 2.3.0
     chgrp -R vagrant /usr/local/rbenv
