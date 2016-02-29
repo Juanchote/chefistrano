@@ -66,18 +66,28 @@ Vagrant.configure(2) do |config|
   # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
   # documentation for more information about their specific syntax and use.
   config.vm.provision "shell", inline: <<-SHELL
-    sudo yum update
+    sudo yum update -y
     sudo yum install -y git gcc bzip2 openssl-devel libyaml-devel libffi-devel readline-devel zlib-devel gdbm-devel ncurses-devel
     sudo yum groupinstall -y 'Development Tools'
-    git clone https://github.com/rbenv/rbenv.git ~/.rbenv
-    cd ~/.rbenv && src/configure && make -C src
-    echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bash_profile
-    printf 'eval "$(rbenv init -)"' >> .bash_profile
-    source ~/.bashrc
-    source ~/.bash_profile
-    git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
-    rbenv install 2.2.0
-    rbenv local 2.2.0
+
+    git clone git://github.com/sstephenson/rbenv.git /usr/local/rbenv
+    echo '# rbenv setup' > /etc/profile.d/rbenv.sh
+    echo 'export RBENV_ROOT=/usr/local/rbenv' >> /etc/profile.d/rbenv.sh
+    echo 'export PATH="$RBENV_ROOT/bin:$PATH"' >> /etc/profile.d/rbenv.sh
+    echo 'eval "$(rbenv init -)"' >> /etc/profile.d/rbenv.sh
+
+    chmod +x /etc/profile.d/rbenv.sh
+    source /etc/profile.d/rbenv.sh
+
+    pushd /tmp
+      git clone git://github.com/sstephenson/ruby-build.git
+      cd ruby-build
+      ./install.sh
+    popd
+    rbenv install 2.3.0
+    rbenv global 2.3.0
+    chgrp -R vagrant /usr/local/rbenv
+    chmod -R g+rwxXs /usr/local/rbenv
     gem install bundler
     rbenv rehash
   SHELL
