@@ -1,0 +1,4 @@
+---
+  - node:
+    - name: cbt-stg-web-001
+    - role: cbt-web
