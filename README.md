@@ -47,4 +47,16 @@ run `cap staging -T` for extra tasks info.
 
 The task will create deployer user, grant sudo permissions, install chef-server & chef-client, configure knife, download workstation and upload cookbooks and roles.
 
+
+# HOW TO: ADD NODES
+edit `files/<stage>/nodes.yml`
+
+Add or replace the nodes
+the syntax is:
+```
+-
+  name: <name of the node>
+  role: <role to apply>
+```
+
 # All this is only at a paypal click from you.
