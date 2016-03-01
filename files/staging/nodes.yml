@@ -1,0 +1,25 @@
+---
+  -
+    name: cbt-stg-web-001
+    role: cbt-web
+  -
+    name: cbt-stg-proxy-001
+    role: cbt-proxy
+  -
+    name: cbt-stg-data-001
+    role: cbt-data
+  -
+    name: cbt-stg-process-001
+    role: cbt-process
+  -
+    name: cmp-stg-web-001
+    role: cmp-web
+  -
+    name: cmp-stg-proxy-001
+    role: cmp-proxy
+  -
+    name: cmp-stg-data-001
+    role: cmp-data
+  -
+    name: cmp-stg-process-001
+    role: cmp-process
