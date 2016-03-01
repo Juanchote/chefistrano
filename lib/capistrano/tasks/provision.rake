@@ -72,7 +72,7 @@ namespace :provision do
             client_key               '/root/.chef/admin.pem'
             validation_client_name   'chef-validator'
             validation_key           '/etc/chef-server/chef-validator.pem'
-            chef_server_url          'https://192.168.33.100:443'
+            chef_server_url          'https://#{fetch(:ip)}:443'
             syntax_check_cache_path  '/root/.chef/syntax_check_cache'
             cookbook_path 		 [ '/etc/chef-workstation/current/cookbooks' ]
             knife[:editor] = '/usr/bin/vim'
