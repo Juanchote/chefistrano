@@ -114,6 +114,19 @@ namespace :provision do
           end
         end
       end
+
+      desc 'Create chef-client nodes'
+      task :data_bags do
+        on roles(:all) do
+          Dir.chdir("/#{Dir.pwd}/data_bags")
+          data_bags = Dir.glob('*').select{ |entry| File.directory? entry }
+          data_bags.each do |data_bag|
+            sudo :knife, :data, :bag, :create, data_bag
+            sudo :knife, :data, :bag, :from, :file, data_bag, current_path.to_s.concat("/data_bags/#{data_bag}/*.json")
+          end
+        end
+      end
+
     end
   end
 end
