@@ -1,7 +1,7 @@
 ---
   -
-    name: stg-node001
+    name: pro-node001
     role: node001
   -
-    name: stg-node002
+    name: pro-node002
     role: node002

@@ -12,7 +12,7 @@ Because is awesome.
 
 Paypal button will be implemented soon.
 
-## Ok, I already donated a lot of money to the taskforce team, how does it works??
+## Ok, I already donated a lot of money to the team, how does it works??
 
 Install vagrant in your local machine
 
@@ -34,7 +34,7 @@ inside `/vagrant` folder there is a whole new world waiting for you to rediscove
 
 usage:
 
-configure your deploy.rb
+configure your deploy.rb / environments/<environment>.rb
 
 then:
 ```

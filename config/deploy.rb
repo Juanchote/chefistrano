@@ -3,7 +3,7 @@ lock '3.4.0'
 
 set :application, 'chef_server'
 #set :repo_url, 'git@example.com:me/my_repo.git'
-set :repo_url, 'ssh://git@git.rakuten-it.com:7999/cmp/chef-repo.git'
+set :repo_url, 'remote git repo'
 
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp

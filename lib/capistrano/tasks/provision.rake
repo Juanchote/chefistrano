@@ -5,16 +5,27 @@ namespace :provision do
     puts fetch(:ip)
   end
 
-  desc 'full provision setup'
-  task :setup do
+  desc 'Setups de environment and installs chef-server and chef-client'
+  task :pre_setup do
     invoke "provision:low_level_it_stuff"
     invoke "provision:chef_server"
     invoke "provision:chef_client"
+  end
+
+  desc 'Pre-setup - Deploy - Post-setup'
+  task :setup do
+    invoke 'provision:pre_setup'
+    invoke 'deploy'
+    invoke 'provision:pro_setup'
+  end
+
+  desc 'Prepare knife and uploads all the stuff'
+  task :post_setup do
     invoke "provision:knife:config"
-    invoke "deploy"
     invoke "provision:knife:upload:cookbooks"
     invoke "provision:knife:upload:roles"
     invoke "provision:knife:create:nodes"
+    invoke "provision:knife:upload:data_bags"
   end
 
 
@@ -102,6 +113,17 @@ namespace :provision do
           execute :knife, :role, "from file #{current_path}/roles/*.json"
         end
       end
+
+      task :data_bags do
+        on roles(:all) do
+          Dir.chdir("#{Dir.pwd}/data_bags/")
+          data_bags = Dir.glob('*').select{ |entry| File.directory? entry }
+          data_bags.each do |data_bag|
+            sudo :knife, :data, :bag, :create, data_bag
+            sudo :knife, :data, :bag, :from, :file, data_bag, current_path.to_s.concat("/data_bags/#{data_bag}/*.json")
+          end
+        end
+      end
     end
     namespace :create do
       desc 'Create chef-client nodes'
@@ -126,7 +148,6 @@ namespace :provision do
           end
         end
       end
-
     end
   end
 end
